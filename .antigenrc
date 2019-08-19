@@ -1,0 +1,18 @@
+export ZSH_TMUX_AUTOSTART="true"
+
+antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+    common-aliases
+    dirhistory
+    extract
+    git
+    pip
+    pipenv
+    ripgrep
+    tmux
+    vi-mode
+    zsh-navigation-tool
+EOBUNDLES
+
+antigen apply
