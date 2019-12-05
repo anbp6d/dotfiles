@@ -1,5 +1,3 @@
-export ZSH_TMUX_AUTOSTART="true"
-
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
