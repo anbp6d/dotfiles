@@ -17,7 +17,7 @@ compinit
 source ~/.antigen/antigen.zsh
 
 antigen use oh-my-zsh
-antigen init .antigenrc
+antigen init ~/.antigenrc
 
 # load common dotfiles
 source ~/.bash_profile
