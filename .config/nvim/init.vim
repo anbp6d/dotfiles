@@ -4,6 +4,47 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync
 endif
 
+" Load All Plugins
+
+call plug#begin(fnamemodify("~/.config/nvim/plugged", ":p"))
+
+Plug 'prabirshrestha/async.vim'
+
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plug 'sheerun/vim-polyglot'
+Plug 'kergoth/vim-bitbake'
+
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'Yggdroot/indentLine'
+
+Plug 'flazz/vim-colorschemes'
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'mhinz/vim-grepper'
+
+Plug 'tpope/vim-fugitive'
+
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'tpope/vim-surround'
+
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'aperezdc/vim-template'
+
+" Load last to patch icons into other plugins
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
 let did_install_default_menus = 1
 
 " Autoload project
@@ -43,11 +84,11 @@ set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 " Normal Copy/Paste
 set pastetoggle=<F10>
 if has('win32') || has('win64')
-    set clipboard=unnamed
+    set clipboard+=unnamed
     vnoremap <C-c> "*y
     inoremap <C-v> <F10><C-r>+<F10>
 else
-    set clipboard=unnamedplus
+    set clipboard+=unnamedplus
     vnoremap <C-c> "+y
     inoremap <C-v> <F10><C-r>+<F10>
 endif
@@ -74,12 +115,13 @@ autocmd BufWritePre *
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if ( argc() == 0 || ( argc() == 1 && isdirectory(argv()[0]) ) ) && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-o> :NERDTreeToggle<CR>
+map <leader>o :NERDTreeToggle<CR>
 
 " Configure Grepper
 runtime plugin/grepper.vim
 if exists("g:grepper")
-    let g:grepper.rg.grepprg = 'rg -H --no-heading --vimgrep -uu'
+    let g:grepper.tools = [ 'rg', 'git', 'grep' ]
+    let g:grepper.rg.grepprg = 'rg -H --no-heading --vimgrep'
     let g:grepper.open  = 1
     let g:grepper.jump  = 0
 endif
@@ -92,10 +134,10 @@ nnoremap <leader>* :Grepper -cword -noprompt -buffer<cr>
 let g:airline_powerline_fonts = 1
 
 " Configure CtrlP
-let g:ctrlp_extensions = ['mixed']
+let g:ctrlp_extensions = ['mixed', 'autoignore']
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_show_hidden = 1
+let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_regexp = 1
 
 " returns true iff is NERDTree open/active
@@ -138,45 +180,4 @@ let g:gitgutter_grep = ''
 " Configure Templates
 let g:templates_directory = ['$HOME/.config/nvim/templates/']
 let g:templates_no_builtin_templates = 1
-
-" Load All Plugins
-
-call plug#begin(fnamemodify("~/.config/nvim/plugged", ":p"))
-
-Plug 'prabirshrestha/async.vim'
-
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-Plug 'sheerun/vim-polyglot'
-
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-Plug 'airblade/vim-gitgutter'
-Plug 'Yggdroot/indentLine'
-
-Plug 'flazz/vim-colorschemes'
-Plug 'altercation/vim-colors-solarized'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-Plug 'mhinz/vim-grepper'
-
-Plug 'tpope/vim-fugitive'
-
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'
-Plug 'tpope/vim-surround'
-
-Plug 'ctrlpvim/ctrlp.vim'
-
-Plug 'aperezdc/vim-template'
-
-" Load last to patch icons into other plugins
-Plug 'ryanoasis/vim-devicons'
-
-call plug#end()
-
 

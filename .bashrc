@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Load dotfiles like ~/.bash_prompt, etc…
+#   ~/.extra is used for settings not committed to the repository,
+for file in ~/.{extra,path,bash_prompt,exports,aliases,functions}; do
+    [ -r "$file" ] && source "$file"
+done
+
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash-it"
 
@@ -24,7 +30,7 @@ case "$(uname -s)" in
     MSYS*|MINGW64*|CYGWIN*)
         #normalize windows paths to unix paths
         PYTHON_USER_BASE="$(cygpath $(python -m site --user-base))"
-        PYTHON_HOME="$(cygpath $(python -c "import sys, os; print os.path.split(sys.executable)[0]"))"
+        PYTHON_HOME="$(cygpath $(python -c "import sys, os; print(os.path.split(sys.executable)[0])"))"
         PERLDIR=$(cygpath $PERLDIR)
         export PATH="$PERLDIR:$PATH:$PYTHON_USER_BASE/scripts:$PYTHON_HOME/scripts"
         export PIPENV_VENV_IN_PROJECT=1
@@ -33,7 +39,7 @@ case "$(uname -s)" in
         ;;
     *)
         PYTHON_USER_BASE="$(python -m site --user-base)"
-        PYTHON_HOME="$(python -c "import sys, os; print os.path.split(sys.executable)[0]")"
+        PYTHON_HOME="$(python -c "import sys, os; print(os.path.split(sys.executable)[0])")"
         export PATH="$PATH:$PYTHON_USER_BASE/bin:$PYTHON_HOME/scripts"
         unset PYTHON_HOME
         ;;
