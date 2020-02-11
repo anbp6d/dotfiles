@@ -1,0 +1,2 @@
+update_copyright -g || exit $?
+clang_format_hook || exit $?

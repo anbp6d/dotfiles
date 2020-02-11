@@ -1,0 +1,36 @@
+# Ignore everything by default
+*
+
+# Git files
+!.gitignore
+!.gitmodules
+
+# Bash configuration
+!.bash-it
+!.bash_profile
+!.bashrc
+
+# Zsh configuration
+!.antigen
+!.antigenrc
+!.zshrc
+
+# Common shell configuration
+!.aliases
+!.exports
+!.path
+
+# Git global configuration
+!.csp-brief-template.txt
+!.gitconfig
+!/.git-templates/
+!/.git-templates/**
+
+# Vim/Neovim config
+!.config/nvim/
+!.vimrc
+
+# SSH config
+!.ssh/
+.ssh/**
+!.ssh/config

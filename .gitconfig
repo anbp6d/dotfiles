@@ -1,0 +1,42 @@
+[user]
+    name = Alex Book
+    email = alex.book@garmin.com
+[diff]
+    tool = vimdiff
+    guitool = bc3
+[difftool]
+    prompt = false
+[difftool "vimdiff"]
+    trustExitCode = true
+[merge]
+    tool = vimdiff
+    guitool = bc3
+    conflictstyle = diff3
+[mergetool]
+    prompt = false
+	keepBackup = false
+    trustExitCode = true
+[core]
+    autocrlf = input
+    editor = nvim
+    longpaths = true
+    safecrlf = true
+    trustctime = false
+    whitespace = cr-at-eol,tab-in-indent
+	symlinks = true
+[color]
+    ui = true
+[commit]
+    template = ~/.csp-brief-template.txt
+[i18n]
+    filesEncoding = utf-8
+[push]
+    default = matching
+[rebase]
+    autoStash = true
+[pull]
+    rebase = true
+[init]
+    templateDir = ~/.git-templates
+[clangFormat]
+	extensions = c,cpp,h,hpp
