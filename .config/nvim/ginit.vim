@@ -10,6 +10,4 @@ if exists(':GuiTabline') == 2
     GuiTabline 0
 endif
 
-set background=dark
-colorscheme monokai-phoenix
 call GuiWindowMaximized(1)

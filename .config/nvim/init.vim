@@ -32,6 +32,8 @@ Plug 'mhinz/vim-grepper'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'yssl/QFEnter'
+
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'tpope/vim-surround'
@@ -52,14 +54,10 @@ if filereadable( "project.vim" )
     source project.vim
 endif
 
-" Setup a Maximized Window
-if has("gui_running")
-    call GuiWindowMaximized(1)
-endif
-
 " Setup Colorscheme
 syntax enable
 set background=dark
+colorscheme monokai-phoenix
 let g:airline_theme='tomorrow'
 
 " In many terminal emulators the mouse works just fine, thus enable it.
@@ -83,7 +81,7 @@ set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Normal Copy/Paste
 set pastetoggle=<F10>
-if has('win32') || has('win64')
+if has('win32') || has('win64') || has('win32unix')
     set clipboard+=unnamed
     vnoremap <C-c> "*y
     inoremap <C-v> <F10><C-r>+<F10>
@@ -92,6 +90,9 @@ else
     vnoremap <C-c> "+y
     inoremap <C-v> <F10><C-r>+<F10>
 endif
+
+" ESC clears highlight in normal mode
+nnoremap <Esc> :let @/=""<Cr>
 
 " Auto reload on file modify
 set autoread
@@ -118,6 +119,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <leader>o :NERDTreeToggle<CR>
 map <leader>O :NERDTreeFind<CR>
 
+" Configure QFEnter to match CtrlP bindings
+let g:qfenter_keymap = {}
+let g:qfenter_keymap.vopen = ['<C-v>']
+let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
+let g:qfenter_keymap.topen = ['<C-t>']
+
 " Configure Grepper
 runtime plugin/grepper.vim
 if exists("g:grepper")
@@ -130,6 +137,9 @@ endif
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 nnoremap <leader>* :Grepper -cword -noprompt -buffer<cr>
+
+" Vertical diffs
+set diffopt+=vertical
 
 " Configure Airline
 let g:airline_powerline_fonts = 1
@@ -155,7 +165,7 @@ if executable('ccls')
       \ 'cmd': {server_info->['ccls']},
       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
       \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ 'whitelist': ['c', 'h', 'cpp', 'objc', 'objcpp', 'cc'],
       \ })
 endif
 
@@ -172,7 +182,6 @@ endif
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Configure Git Gutter
 set updatetime=100
@@ -181,4 +190,18 @@ let g:gitgutter_grep = ''
 " Configure Templates
 let g:templates_directory = ['$HOME/.config/nvim/templates/']
 let g:templates_no_builtin_templates = 1
+
+" Auto clang-format on save
+function! Clangformatonsave()
+    let l:formatdiff = 0
+    if filereadable('.clang-format')
+        if has('win32') || has('win64') || has('win32unix')
+            pyf C:/Program Files/LLVM/share/clang/clang-format.py
+        else
+            pyf /usr/share/clang/clang-format.py
+        endif
+    endif
+endfunction
+
+autocmd BufWritePre *.c,*.cpp,*.h,*.hpp call Clangformatonsave()
 

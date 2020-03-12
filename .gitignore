@@ -34,3 +34,9 @@
 !.ssh/
 .ssh/**
 !.ssh/config
+
+# Tmux
+!.tmux.conf
+
+# Tig
+!.tigrc

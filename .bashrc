@@ -6,12 +6,20 @@ for file in ~/.{extra,path,bash_prompt,exports,aliases,functions}; do
     [ -r "$file" ] && source "$file"
 done
 
+# Start tmux if it exists on the system and we're not already in a session
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux -2 new-session -A -s main
+fi
+
+# Setup dircolors
+eval "$(dircolors)"
+
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash-it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-if ( [ "$TERM" == 'xterm' ] || [ "$TERM" == 'xterm-256color' ] || [ "$TERM" == 'cygwin' ] ) ; then
+if ( [ "$TERM" == 'xterm-256color' ] || [ "$TERM" == 'cygwin' ] || [ "$TERM" == 'screen-256color' ] ) ; then
     export BASH_IT_THEME='powerline-multiline'
     export POWERLINE_LEFT_PROMPT="scm cwd"
     export POWERLINE_RIGHT_PROMPT="clock user_info"
@@ -35,7 +43,6 @@ case "$(uname -s)" in
         export PATH="$PERLDIR:$PATH:$PYTHON_USER_BASE/scripts:$PYTHON_HOME/scripts"
         export PIPENV_VENV_IN_PROJECT=1
         unset PYTHON_HOME
-        export ANDROID_NDK_ROOT=D:\\Android_NDK\\android-ndk-r16b
         ;;
     *)
         PYTHON_USER_BASE="$(python -m site --user-base)"
