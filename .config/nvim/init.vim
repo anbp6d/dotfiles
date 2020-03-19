@@ -179,9 +179,11 @@ if executable('pyls')
 endif
 
 " Configure Tab Completion
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
+if exists("*pumvisible")
+	inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+	inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
+endif
 
 " Configure Git Gutter
 set updatetime=100
