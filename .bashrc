@@ -7,7 +7,7 @@ for file in ~/.{extra,path,bash_prompt,exports,aliases,functions}; do
 done
 
 # Start tmux if it exists on the system and we're not already in a session
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if hash tmux 2>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux -2 new-session -A -s main
 fi
 
@@ -37,11 +37,17 @@ export SCM_GIT_SHOW_MINIMAL_INFO=true
 case "$(uname -s)" in
     MSYS*|MINGW64*|CYGWIN*)
         #normalize windows paths to unix paths
-        PYTHON_USER_BASE="$(cygpath $(python -m site --user-base))"
-        PYTHON_HOME="$(cygpath $(python -c "import sys, os; print(os.path.split(sys.executable)[0])"))"
-        PERLDIR=$(cygpath $PERLDIR)
+        if hash python 2>/dev/null; then
+            PYTHON_USER_BASE="$(cygpath $(python -m site --user-base))"
+            PYTHON_HOME="$(cygpath $(python -c "import sys, os; print(os.path.split(sys.executable)[0])"))"
+            export PIPENV_VENV_IN_PROJECT=1
+        fi
+        if [ -n "$PERLDIR" ]; then
+            PERLDIR=$(cygpath $PERLDIR)
+        else
+            echo "Warning: PERLDIR is not set"
+        fi
         export PATH="$PERLDIR:$PATH:$PYTHON_USER_BASE/scripts:$PYTHON_HOME/scripts"
-        export PIPENV_VENV_IN_PROJECT=1
         unset PYTHON_HOME
         ;;
     *)
