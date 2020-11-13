@@ -200,7 +200,7 @@ function! Clangformatonsave()
         if has('win32') || has('win64') || has('win32unix')
             pyf C:/Program Files/LLVM/share/clang/clang-format.py
         else
-            pyf /usr/share/clang/clang-format.py
+            pyf ~/.local/bin/clang-format.py
         endif
     endif
 endfunction
