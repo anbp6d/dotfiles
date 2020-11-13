@@ -70,7 +70,7 @@ set number
 set nowrap
 
 " Allow multiple sign columns
-if has('nvim')
+if has('nvim-0.4')
     set signcolumn=auto:9
 else
     set signcolumn=auto
