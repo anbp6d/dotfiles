@@ -25,6 +25,9 @@
 !.gitconfig
 !/.git-templates/
 !/.git-templates/**
+!.config/
+!.config/git/
+!.config/git/**
 
 # Vim/Neovim config
 !.config/nvim/

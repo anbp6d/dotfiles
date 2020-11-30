@@ -40,3 +40,5 @@
     templateDir = ~/.git-templates
 [clangFormat]
 	extensions = c,cpp,h,hpp
+[include]
+    path = ~/.config/git/colors.config
