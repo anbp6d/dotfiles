@@ -1,5 +1,7 @@
 set line-graphics = utf-8
-set start-on-head = yes
 set mouse = yes
 set mouse-wheel-cursor = no
 set main-view-id-display = yes
+set git-colors = no
+
+source ~/.config/tig/colorscheme.tigrc

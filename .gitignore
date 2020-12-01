@@ -20,12 +20,14 @@
 !.exports
 !.path
 
+# Add back standard XDG base directory
+!.config/
+
 # Git global configuration
 !.csp-brief-template.txt
 !.gitconfig
 !/.git-templates/
 !/.git-templates/**
-!.config/
 !.config/git/
 !.config/git/**
 
@@ -42,4 +44,5 @@
 !.tmux.conf
 
 # Tig
-!.tigrc
+!.config/tig/
+!.config/tig/**
