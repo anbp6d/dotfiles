@@ -6,11 +6,6 @@ for file in ~/.{extra,path,bash_prompt,exports,aliases,functions}; do
     [ -r "$file" ] && source "$file"
 done
 
-# Start tmux if it exists on the system and we're not already in a session
-if hash tmux 2>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux -2 new-session -A -s main
-fi
-
 # Setup dircolors
 eval "$(dircolors)"
 
@@ -38,7 +33,8 @@ case "$(uname -s)" in
     MSYS*|MINGW64*|CYGWIN*)
         #normalize windows paths to unix paths
         if hash python 2>/dev/null; then
-            PYTHON_USER_BASE="$(cygpath $(python -m site --user-base))"
+            export PYTHON_USER_BASE="$(cygpath $(python -m site --user-base))"
+            export PYTHON_USER_SITE="$(cygpath $(python -m site --user-site))"
             PYTHON_HOME="$(cygpath $(python -c "import sys, os; print(os.path.split(sys.executable)[0])"))"
             export PIPENV_VENV_IN_PROJECT=1
         fi
@@ -51,7 +47,8 @@ case "$(uname -s)" in
         unset PYTHON_HOME
         ;;
     *)
-        PYTHON_USER_BASE="$(python -m site --user-base)"
+        export PYTHON_USER_BASE="$(python -m site --user-base)"
+        export PYTHON_USER_SITE="$(python -m site --user-site)"
         PYTHON_HOME="$(python -c "import sys, os; print(os.path.split(sys.executable)[0])")"
         export PATH="$PATH:$PYTHON_USER_BASE/bin:$PYTHON_HOME/scripts"
         unset PYTHON_HOME
@@ -82,3 +79,10 @@ esac
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
+
+# Start tmux if it exists on the system and we're not already in a session
+# Do this last to ensure all of our variables are set correctly
+if hash tmux 2>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux -2 new-session -A -s main
+fi
+
