@@ -2,6 +2,5 @@
 
 if ! git rev-parse -q --verify MERGE_HEAD
 then
-    update_copyright -g || exit $?
     clang_format_hook || exit $?
 fi
