@@ -15,9 +15,9 @@ export BASH_IT="$HOME/.bash-it"
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
 if ( [ "$TERM" == 'xterm-256color' ] || [ "$TERM" == 'cygwin' ] || [ "$TERM" == 'screen-256color' ] ) ; then
-    export BASH_IT_THEME='powerline-multiline'
+    export BASH_IT_THEME='powerline-multiline-custom'
     export POWERLINE_LEFT_PROMPT="scm cwd"
-    export POWERLINE_RIGHT_PROMPT="clock user_info"
+    export POWERLINE_RIGHT_PROMPT="whisk_products whisk_mode user_info"
 else
     export BASH_IT_THEME='atomic'
 fi
@@ -76,6 +76,8 @@ esac
 # (Advanced): Uncomment this to make Bash-it reload itself automatically
 # after enabling or disabling aliases, plugins, and completions.
 # export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
+
+export BASH_IT_CUSTOM="$HOME/.custom-bash-it"
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh

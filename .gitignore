@@ -9,6 +9,8 @@
 !.bash-it
 !.bash_profile
 !.bashrc
+!.custom-bash-it/
+!.custom-bash-it/**
 
 # Zsh configuration
 !.antigen
