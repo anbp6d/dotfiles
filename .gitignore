@@ -48,3 +48,6 @@
 # Tig
 !.config/tig/
 !.config/tig/**
+
+# Editor Config for dotfiles
+!.editorconfig

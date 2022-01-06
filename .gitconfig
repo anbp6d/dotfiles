@@ -11,7 +11,7 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
-	keepBackup = false
+    keepBackup = false
     trustExitCode = true
 [core]
     autocrlf = input

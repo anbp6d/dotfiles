@@ -40,6 +40,8 @@ Plug 'tpope/vim-surround'
 
 Plug 'ctrlpvim/ctrlp.vim'
 
+Plug 'editorconfig/editorconfig-vim'
+
 Plug 'aperezdc/vim-template'
 
 " Load last to patch icons into other plugins
@@ -75,9 +77,6 @@ if has('nvim-0.4')
 else
     set signcolumn=auto
 endif
-
-" Tabs as spaces
-set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Normal Copy/Paste
 set pastetoggle=<F10>
